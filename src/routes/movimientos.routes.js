@@ -10,14 +10,20 @@ router.get('/movimientos', async (req, res) => {
     res.json(movimientos)
 });
 
+//Creamos un movimiento
 router.post('/movimientos', async (req, res) => {
-    const { tipo, cantidad, productoId } = req.body
-    const newMovimeintos = await prisma.movimientos.create({
+    const { tipo, observaciones, cantidad, producto_id } = req.body
+    const newMovimientos = await prisma.movimientos.create({
         data:{
             tipo,
             observaciones,
             cantidad: Number(cantidad),
-            producto_id: Number(productoId)
+            //Relacionamos el movimiento con el producto mediante la llave foranea producto_id
+            Producto: {
+                connect: {
+                    id: Number(producto_id)
+                }
+            }
         }
     });
     res.json(newMovimientos)
