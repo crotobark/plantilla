@@ -5,10 +5,27 @@ const prisma = new PrismaClient()
 
 const router = Router();
 
+
+//Obtenemos los movimientos
 router.get('/movimientos', async (req, res) => {
     const movimientos = await prisma.movimientos.findMany()
     res.json(movimientos)
 });
+
+router.get('/movimientos/:id', async (req, res) => {
+    const movimiento = await prisma.movimientos.findUnique({
+        where: {
+            id: Number(req.params.id)
+        }, include: {
+            Producto: {
+                select: {
+                    categoria: true,    
+                }
+            }
+        }
+    })
+    res.json(movimiento)
+})
 
 //Creamos un movimiento
 router.post('/movimientos', async (req, res) => {
@@ -54,23 +71,21 @@ router.post('/movimientos', async (req, res) => {
         res.json(decrementStock);
     }
 
-  
-
-const newMovimientos = await prisma.movimientos.create({
-    data: {
-        tipo,
-        observaciones,
-        cantidad: Number(cantidad),
-        //Relacionamos el movimiento con el producto mediante la llave foranea producto_id
-        Producto: {
-            connect: {
-                id: Number(producto_id)
+    const newMovimientos = await prisma.movimientos.create({
+        data: {
+            tipo,
+            observaciones,
+            cantidad: Number(cantidad),
+            //Relacionamos el movimiento con el producto mediante la llave foranea producto_id
+            Producto: {
+                connect: {
+                    id: Number(producto_id)
+                }
             }
         }
-    }
+    });
+    res.json(newMovimientos)
 });
-res.json(newMovimientos)
-})
 
 
 export default router;
