@@ -10,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "nodemon": "^3.1.10",
     "prisma": "^6.17.1"
@@ -26,5 +25,6 @@
   "bugs": {
     "url": "https://github.com/crotobark/plantilla/issues"
   },
-  "homepage": "https://github.com/crotobark/plantilla#readme"
+  "homepage": "https://github.com/crotobark/plantilla#readme",
+  "description": ""
 }

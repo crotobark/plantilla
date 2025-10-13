@@ -35,5 +35,5 @@ model movimientos {
   observaciones String
   tipo          String
   producto_id   Int //Foranea
-  Producto      productos @relation(fields: [producto_id], references: [id])
+  Producto      productos @relation(fields: [producto_id], references: [id])
 }

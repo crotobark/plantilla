@@ -10,4 +10,16 @@ router.get('/movimientos', async (req, res) => {
     res.json(movimientos)
 });
 
+router.post('/movimientos', async (req, res) => {
+    const { tipo, cantidad, productoId } = req.body
+    const newMovimeintos = await prisma.movimientos.create({
+        data:{
+            tipo,
+            observaciones,
+            cantidad: Number(cantidad),
+            producto_id: Number(productoId)
+        }
+    });
+    res.json(newMovimientos)
+})
 export default router;
