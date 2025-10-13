@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -16,7 +16,7 @@ router.post('/movimientos', async (req, res) => {
     const { tipo, observaciones, cantidad, producto_id } = req.body
 
     const newMovimientos = await prisma.movimientos.create({
-        data:{
+        data: {
             tipo,
             observaciones,
             cantidad: Number(cantidad),
@@ -30,4 +30,6 @@ router.post('/movimientos', async (req, res) => {
     });
     res.json(newMovimientos)
 })
+
+
 export default router;
