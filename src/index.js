@@ -1,5 +1,4 @@
 import express from 'express';
-
 import usersRoutes from './routes/users.routes.js';
 import movimientosRoutes from './routes/movimientos.routes.js';
 import productosRoutes from './routes/productos.routes.js';

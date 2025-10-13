@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 const router = Router();
 
+//Obtenemos los usuarios
 router.get('/users', async (req, res) => {
     const users = await prisma.users.findMany()
     res.json(users)
