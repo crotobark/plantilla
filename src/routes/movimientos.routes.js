@@ -11,8 +11,8 @@ router.get('/movimientos', async (req, res) => {
 });
 
 router.post('/movimientos', async (req, res) => {
-    const { tipo, cantidad, productoId } = req.body
-    const newMovimeintos = await prisma.movimientos.create({
+    const { tipo, cantidad, productoId, observaciones } = req.body
+    const newMovimientos = await prisma.movimientos.create({
         data:{
             tipo,
             observaciones,
