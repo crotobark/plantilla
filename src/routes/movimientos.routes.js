@@ -31,19 +31,30 @@ router.post('/movimientos', async (req, res) => {
 
     if (tipo === "Salida") {
 
-        const decrementStock = await prisma.productos.update({
+        const producto = await prisma.productos.findUnique({
+            where: {
+                id: Number(producto_id)
+            }
+        });
 
+        const nuevoStock = producto.stock_actual - Number(cantidad);
+
+        if (nuevoStock < 0) {
+            return res.status(400).json({ error: "No hay suficiente stock para realizar la salida" });
+        }
+
+        const decrementStock = await prisma.productos.update({
             where: {
                 id: Number(producto_id)
             },
             data: {
-                stock_actual: {
-                    decrement: Number(cantidad)
-                }
-            }
+                stock_actual: nuevoStock
+            },
         });
         res.json(decrementStock);
     }
+
+  
 
 const newMovimientos = await prisma.movimientos.create({
     data: {
