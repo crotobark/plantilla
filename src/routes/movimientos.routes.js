@@ -12,11 +12,9 @@ router.get('/movimientos', async (req, res) => {
 
 //Creamos un movimiento
 router.post('/movimientos', async (req, res) => {
-<<<<<<< HEAD
-    const { tipo, cantidad, productoId, observaciones } = req.body
-=======
+
     const { tipo, observaciones, cantidad, producto_id } = req.body
->>>>>>> 9bd27decbeb34046eb7d5a901889f06801dbcc7d
+
     const newMovimientos = await prisma.movimientos.create({
         data:{
             tipo,
