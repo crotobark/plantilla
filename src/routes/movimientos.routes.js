@@ -5,9 +5,9 @@ const prisma = new PrismaClient()
 
 const router = Router();
 
-router.get('/productos', async (req, res) => {
-    const productos = await prisma.productos.findMany()
-    res.json(productos)
+router.get('/movimientos', async (req, res) => {
+    const movimientos = await prisma.movimientos.findMany()
+    res.json(movimientos)
 });
 
 export default router;
