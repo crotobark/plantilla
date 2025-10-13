@@ -15,6 +15,20 @@ router.post('/movimientos', async (req, res) => {
 
     const { tipo, observaciones, cantidad, producto_id } = req.body
 
+    if(tipo === "Entrada") {
+        const incrementStock = await prisma.productos.update({
+            where: {
+                id: Number(producto_id)
+            },
+            data: {
+                stock_actual: {
+                    increment: Number(cantidad)
+                }
+            }
+        });
+        res.json(incrementStock)
+    }
+
     const newMovimientos = await prisma.movimientos.create({
         data: {
             tipo,
