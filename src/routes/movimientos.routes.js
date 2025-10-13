@@ -15,7 +15,7 @@ router.post('/movimientos', async (req, res) => {
 
     const { tipo, observaciones, cantidad, producto_id } = req.body
 
-    if(tipo === "Entrada") {
+    if (tipo === "Entrada") {
         const incrementStock = await prisma.productos.update({
             where: {
                 id: Number(producto_id)
@@ -29,20 +29,36 @@ router.post('/movimientos', async (req, res) => {
         res.json(incrementStock)
     }
 
-    const newMovimientos = await prisma.movimientos.create({
-        data: {
-            tipo,
-            observaciones,
-            cantidad: Number(cantidad),
-            //Relacionamos el movimiento con el producto mediante la llave foranea producto_id
-            Producto: {
-                connect: {
-                    id: Number(producto_id)
+    if (tipo === "Salida") {
+
+        const decrementStock = await prisma.productos.update({
+
+            where: {
+                id: Number(producto_id)
+            },
+            data: {
+                stock_actual: {
+                    decrement: Number(cantidad)
                 }
             }
+        });
+        res.json(decrementStock);
+    }
+
+const newMovimientos = await prisma.movimientos.create({
+    data: {
+        tipo,
+        observaciones,
+        cantidad: Number(cantidad),
+        //Relacionamos el movimiento con el producto mediante la llave foranea producto_id
+        Producto: {
+            connect: {
+                id: Number(producto_id)
+            }
         }
-    });
-    res.json(newMovimientos)
+    }
+});
+res.json(newMovimientos)
 })
 
 
