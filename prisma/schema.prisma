@@ -9,43 +9,31 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model products {
-  id                  Int      @id @default(autoincrement())
-  referencia          String
-  description         String
-  unidad_medida       Int
-  categoria           String
-  almacen             String
-  stock_minimo        Int
-  stock_actual        Int
-
+model users {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
 }
 
-model entradas {
-  id                     BigInt      @id @default(autoincrement())
-  producto_id            BigInt
-  fecha                  DateTime    @default(now())
-  cantidad               Int
-  observaciones          String
-  id_usuario             Int
+model productos {
+  id           Int           @id @default(autoincrement())
+  description  String
+  categoria    String
+  stock_minimo Int
+  stock_actual Int
+  movimientos  movimientos[]
 }
 
-model salidas {
-  id                     BigInt      @id @default(autoincrement())
-  producto_id            BigInt
-  id_detalle_cliente     BigInt
-  id_usuario             BigInt
-  fecha                  DateTime @default(now())
-  cantidad               Int
-  observaciones          String
-}
-
-model inventario {
-  id                     BigInt      @id @default(autoincrement())
-  producto_id            BigInt
-  stock_actual           Int
+model movimientos {
+  id            Int       @id @default(autoincrement())
+  fecha         DateTime  @default(now())
+  cantidad      Int
+  observaciones String
+  tipo          String
+  producto_id   Int //Foranea
+  Producto      productos @relation(fields: [producto_id], references: [id])
 }
